@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html#contact">Contact Us</a></li>
+            <li><a href="find-dropbox.html">Find Dropbox</a></li>
+            <li><a href="shopping.html">Shop</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <!-- Cart button is added only on the Shop page -->
+            <li id="cart-button-container"><a href="#" id="open-cart-button">Cart</a></li>
+        </ul>
+    </nav>
+
+    <!-- Shopping Section -->
+    <section id="shop">
+        <h2>Our Products</h2>
+        <div class="products">
+            <!-- Product Cards -->
+            <div class="product-card" data-product-name="Recycled Pillow" data-price="300">
+                <img src="image02.jpg" alt="Pillow">
+                <h3>Recycled Pillow</h3>
+                <p>Price: ₹300</p>
+                <p>Reward Coins: 30</p>
+                <div class="quantity-controls">
+                    <button class="decrement">-</button>
+                    <input type="number" class="quantity" value="1" min="1">
+                    <button class="increment">+</button>
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <!-- Additional Product Cards -->
+            <div class="product-card" data-product-name="Recycled Tote Bag" data-price="150">
+                <img src="totebags.jpg" alt="Tote Bag">
+                <h3>Recycled Tote Bag</h3>
+                <p>Price: ₹150</p>
+                <p>Reward Coins: 15</p>
+                <div class="quantity-controls">
+                    <button class="decrement">-</button>
+                    <input type="number" class="quantity" value="1" min="1">
+                    <button class="increment">+</button>
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-product-name="Recycled Blanket" data-price="400">
+                <img src="blanket.jpeg" alt="Blanket">
+                <h3>Recycled Blanket</h3>
+                <p>Price: ₹400</p>
+                <p>Reward Coins: 40</p>
+                <div class="quantity-controls">
+                    <button class="decrement">-</button>
+                    <input type="number" class="quantity" value="1" min="1">
+                    <button class="increment">+</button>
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-product-name="Recycled Socks" data-price="100">
+                <img src="socs.jpeg" alt="Socks">
+                <h3>Recycled Socks</h3>
+                <p>Price: ₹100</p>
+                <p>Reward Coins: 10</p>
+                <div class="quantity-controls">
+                    <button class="decrement">-</button>
+                    <input type="number" class="quantity" value="1" min="1">
+                    <button class="increment">+</button>
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-product-name="Recycled Scarf" data-price="250">
+                <img src="scarf.jpeg" alt="Scarf">
+                <h3>Recycled Scarf</h3>
+                <p>Price: ₹250</p>
+                <p>Reward Coins: 25</p>
+                <div class="quantity-controls">
+                    <button class="decrement">-</button>
+                    <input type="number" class="quantity" value="1" min="1">
+                    <button class="increment">+</button>
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-product-name="Recycled Jacket" data-price="600">
+                <img src="jacket.jpg" alt="Jacket">
+                <h3>Recycled Jacket</h3>
+                <p>Price: ₹600</p>
+                <p>Reward Coins: 60</p>
+                <div class="quantity-controls">
+                    <button class="decrement">-</button>
+                    <input type="number" class="quantity" value="1" min="1">
+                    <button class="increment">+</button>
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    <div id="cart-popup" class="cart-popup">
+        <h2>Your Cart</h2>
+        <div class="cart-items"></div>
+        <p>Total: ₹<span id="total-amount">0</span></p>
+        <div class="button-container">
+            <button id="pay-button">Pay</button>
+            <button id="close-cart">Close</button>
+        </div>
+    </div>
+    <!-- Cart Popup -->
+    <div id="cart-popup" class="cart-popup" style="display: none;">
+        <h2>Your Cart</h2>
+        <div class="cart-items"></div>
+        <p>Total: ₹<span id="total-amount">0</span></p>
+        <div class="button-container">
+            <button id="pay-button">Pay</button>
+            <button id="close-cart">Close</button>
+        </div>
+        <div id="qr-code-container">
+            <img src="images/qrcode.png" alt="QR Code for Payment">
+        </div>
+    </div>
+
+    <script src="shopping.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentPage = window.location.pathname.split("/").pop();
+            const cartButtonContainer = document.getElementById('cart-button-container');
+            if (currentPage !== "shopping.html") {
+                cartButtonContainer.style.display = 'none';
+            }
+
+            const openCartButton = document.getElementById('open-cart-button');
+            const cartPopup = document.getElementById('cart-popup');
+            const closeCartButton = document.getElementById('close-cart');
+            const cartItemsContainer = document.querySelector('.cart-items');
+            const totalAmountEl = document.getElementById('total-amount');
+            let cart = [];
+
+            // Open cart popup
+            openCartButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                cartPopup.style.display = 'block';
+                renderCartItems();
+            });
+
+            // Close cart popup
+            closeCartButton.addEventListener('click', function() {
+                cartPopup.style.display = 'none';
+            });
+
+            // Add to Cart functionality
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const productName = productCard.dataset.productName;
+                    const price = parseFloat(productCard.dataset.price);
+                    const quantity = parseInt(productCard.querySelector('.quantity').value);
+
+                    const existingItem = cart.find(item => item.productName === productName);
+
+                    if (existingItem) {
+                        existingItem.quantity += quantity;
+                    } else {
+                        cart.push({ productName, price, quantity });
+                    }
+
+                    updateTotalAmount();
+                    alert(`${productName} has been added to your cart!`);
+                });
+            });
+
+            // Render cart items
+            function renderCartItems() {
+                cartItemsContainer.innerHTML = '';
+
+                cart.forEach((item, index) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('cart-item');
+                    itemElement.innerHTML = `
+                        <span>${item.productName}</span>
+                        <span>Quantity: ${item.quantity}</span>
+                        <span>Price: ₹${item.price * item.quantity}</span>
+                        <button class="remove-item" data-index="${index}">Remove</button>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                });
+
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        cart.splice(index, 1);
+                        updateTotalAmount();
+                        renderCartItems();
+                    });
+                });
+            }
+
+            // Update total amount
+            function updateTotalAmount() {
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalAmountEl.textContent = total;
+            }
+        });
+    </script>
+</body>
+</html>

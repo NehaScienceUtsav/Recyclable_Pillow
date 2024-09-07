@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Dropbox</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul style="list-style: none; display: flex; gap: 15px; padding: 0;">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html#contact">Contact Us</a></li>
+            <li><a href="find-dropbox.html">Find Dropbox</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <!-- Find Dropbox Section -->
+    <section id="find-dropbox">
+        <div id="infobox">
+            <h2>Find Dropbox</h2>
+            <p>Looking to recycle your old clothes? Enter your details below, and we'll help you find the nearest drop box location to make recycling easy and convenient for you.</p>
+            <form id="dropbox-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Your Name" required>
+
+                <label for="contact">Contact Number:</label>
+                <input type="text" id="contact" placeholder="Your Contact Number" required>
+
+                <label for="location">Current Location:</label>
+                <input type="text" id="location" placeholder="Your Current Location" required>
+
+                <label for="weight">Weight of Clothes (kg):</label>
+                <input type="number" id="weight" placeholder="Weight of Clothes" required>
+
+                <button type="button" id="find-dropbox-button">Find Dropbox</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Nearby Dropboxes Section (Initially Hidden) -->
+    <section id="nearby-dropboxes" style="display: none; margin-top: 20px; text-align: center;">
+        <h2>Nearby Dropboxes</h2>
+        <li id="dropbox-list" style="list-style: none; font-size: 20px; color: black;">
+            <!-- URLs will be inserted here by JavaScript -->
+        </li>
+    </section>
+
+    <!-- Map Section -->
+    <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+    <script src="find-dropbox.js"></script>
+    <script>
+        // Function to simulate finding nearby dropboxes
+        function showNearbyDropboxes() {
+            const dropboxSection = document.getElementById('nearby-dropboxes');
+            const dropboxList = document.getElementById('dropbox-list');
+
+            // Example URLs for nearby dropboxes
+            const dropboxLinks = [
+                { url: 'https://maps.app.goo.gl/WB9gJcUj9wjCjA7c8', name: 'Dropbox 1 Capacity 25 Kg' },
+                { url: 'https://maps.app.goo.gl/sGWTTUQ2n9QqGniY8', name: 'Dropbox 2 Capacity 15 Kg' },
+                { url: 'https://maps.app.goo.gl/Q9H7ryFosH8Uu6JB9', name: 'Dropbox 3 Capacity 5 Kg' },
+                { url: 'https://maps.app.goo.gl/xU1Pch6TvRj3m9Dz8', name: 'Dropbox 4 Capacity 20 Kg' },
+            ];
+
+            // Clear existing list items
+            dropboxList.innerHTML = '';
+
+            // Add the URLs to the list
+            dropboxLinks.forEach(link => {
+                const listItem = document.createElement('li');
+                const anchor = document.createElement('a');
+                anchor.href = link.url;
+                anchor.target = '_blank';
+                anchor.textContent = link.name;
+                listItem.appendChild(anchor);
+                dropboxList.appendChild(listItem);
+            });
+
+            // Show the section
+            dropboxSection.style.display = 'block';
+        }
+
+        // Event listener for the "Find Dropbox" button
+        document.getElementById('find-dropbox-button').addEventListener('click', function() {
+            // Prevent form submission
+            showNearbyDropboxes();
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html#contact">Contact Us</a></li>
+            <li><a href="find-dropbox.html">Find Dropbox</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <!-- Feedback Section -->
+    <section id="feedback">
+        <h2>Feedback</h2>
+        <p>We value your feedback and suggestions. Your input helps us improve our services and better serve our community. Please share your experience and any ideas for improvement below.</p>
+        <form id="feedback-form">
+            <label for="feedback-experience">Your Experience:</label>
+            <textarea id="feedback-experience" placeholder="Share your experience with our services..." required></textarea>
+            <label for="feedback-suggestions">Suggestions:</label>
+            <textarea id="feedback-suggestions" placeholder="Any suggestions for us?" required></textarea>
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </section>
+
+    <script>
+        document.getElementById('feedback-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Thank you for your feedback! Your thoughts are valuable to us.');
+            // Normally, you would handle form submission here (e.g., sending data to a server).
+        });
+    </script>
+</body>
+</html>
